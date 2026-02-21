@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="loginstyle.css">
+    
+</head>
+<body>
+    <h2>Register</h2>
+    <form id="registerForm">
+        <input type="text" id="name" placeholder="Name" required><br>
+        <input type="email" id="email" placeholder="Email" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
+        
+        <label>Select Role:</label>
+<select id="role">
+    <option value="USER">USER</option>
+    <option value="ADMIN">ADMIN</option>
+</select>
+<br><br>
+        <button type="submit">Register</button>
+    </form>
+    <p id="message"></p>
+
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role= document.getElementById('role').value;
+            const res = await registerUser({ name, email, password, role });
+            if (res) {
+                alert("✅ Registered successfully! Please login.");
+                window.location.href = "login.html"; // ✅ redirect to login
+            } else {
+                document.getElementById('message').innerText = "❌ Registration failed. Try again.";
+            }
+            document.getElementById('message').innerText = res;
+        });
+    </script>
+</body>
+</html>

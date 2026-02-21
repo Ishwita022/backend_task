@@ -1,0 +1,154 @@
+/* =====================================
+   RESET
+===================================== */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =====================================
+   ROOT VARIABLES (Design System)
+===================================== */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --background-gradient: linear-gradient(135deg, #e0f2fe, #f8fafc);
+    --card-bg: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --success: #16a34a;
+    --error: #dc2626;
+    --radius: 14px;
+    --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    --transition: all 0.3s ease;
+    --max-width: 420px;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* =====================================
+   BODY
+===================================== */
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--background-gradient);
+    padding: 20px;
+    color: var(--text-primary);
+}
+
+/* =====================================
+   FORM CARD CONTAINER
+===================================== */
+body > h2,
+body > form,
+body > p {
+    width: 100%;
+    max-width: var(--max-width);
+}
+
+form {
+    background: var(--card-bg);
+    padding: 40px 35px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* =====================================
+   HEADINGS
+===================================== */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.9rem;
+    font-weight: 600;
+}
+
+/* =====================================
+   INPUT FIELDS
+===================================== */
+input,
+select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    font-size: 0.95rem;
+    transition: var(--transition);
+    outline: none;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* =====================================
+   LABEL
+===================================== */
+label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+/* =====================================
+   BUTTON
+===================================== */
+button {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+/* =====================================
+   MESSAGE TEXT
+===================================== */
+#message {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Optional Success / Error Styling */
+.success {
+    color: var(--success);
+}
+
+.error {
+    color: var(--error);
+}
+
+/* =====================================
+   RESPONSIVE DESIGN
+===================================== */
+@media (max-width: 480px) {
+    form {
+        padding: 30px 20px;
+    }
+
+    h2 {
+        font-size: 1.6rem;
+    }
+}

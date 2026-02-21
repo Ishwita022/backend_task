@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h2>Tasks</h2>
+<div class="container">
+
+    <div class="card">
+    <h3>Create Task</h3>
+    <form id="taskForm">
+        <input type="text" id="title" placeholder="Title" required><br>
+        <input type="text" id="description" placeholder="Description"><br>
+        <button class="primary" onclick="createTask">Create</button>
+    
+    </form>
+</div>
+
+<div class="card">
+    <h3>Your Tasks</h3>
+    <ul id="taskList"></ul>
+</div>
+    <script src="script.js"></script>
+    <script>
+    
+   /*  const role = getUserRole(); */
+    const role = getUserRole();
+
+    if (!role) {
+        alert("Login first");
+        window.location.href = "login.html";
+    }
+
+    // ✅ Load tasks on page load
+    loadTasks();
+
+    // ✅ Create task form submit
+    document.getElementById('taskForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('title').value;
+        const description = document.getElementById('description').value;
+        await createTask({ title, description });
+        document.getElementById('taskForm').reset();
+
+    });
+        
+        loadTasks();
+    </script>
+</body>
+</html>

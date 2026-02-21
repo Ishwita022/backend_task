@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="loginstyle.css">
+</head>
+<body>
+    <h2>Login</h2>
+    <form id="loginForm">
+        <input type="email" id="email" placeholder="Email" required><br><br>
+        <input type="password" id="password" placeholder="Password" required><br><br>
+        <button type="submit">Login</button>
+    </form>
+    <p id="message" style="color:red;"></p>
+
+    <!-- Only ONE script.js load -->
+    <script src="script.js"></script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            const token = await loginUser({ email, password });
+
+            if (token) {
+                saveToken(token); // ✅ save JWT
+
+                const role = getUserRole(); // ✅ decode role from token
+
+                if (role === "ROLE_ADMIN") {
+                    window.location.href = "dashboard.html"; // admin goes to dashboard
+                } else {
+                    window.location.href = "tasks.html"; // user goes to tasks
+                }
+
+            } else {
+                document.getElementById('message').innerText = "❌ Invalid email or password";
+            }
+        });
+    </script>
+</body>
+</html>
