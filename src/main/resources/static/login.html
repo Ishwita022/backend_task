@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="loginstyle.css">
 </head>
@@ -9,14 +9,35 @@
     <h2>Login</h2>
     <form id="loginForm">
         <input type="email" id="email" placeholder="Email" required><br><br>
-        <input type="password" id="password" placeholder="Password" required><br><br>
+
+        <!-- Password with eye icon -->
+        <div style="position:relative; display:inline-block; width:100%;">
+            <input type="password" id="password" placeholder="Password" required
+                style="width:100%; padding:10px; box-sizing:border-box;">
+            <span onclick="togglePassword()"
+                style="position:absolute; right:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-size:18px;">
+                👁️
+            </span>
+        </div>
+        <br><br>
+
         <button type="submit">Login</button>
     </form>
     <p id="message" style="color:red;"></p>
 
-    <!-- Only ONE script.js load -->
     <script src="script.js"></script>
     <script>
+        // Eye toggle function
+        function togglePassword() {
+            const passInput = document.getElementById("password");
+            if (passInput.type === "password") {
+                passInput.type = "text";
+            } else {
+                passInput.type = "password";
+            }
+        }
+
+        // Login form submit
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
@@ -26,16 +47,14 @@
             const token = await loginUser({ email, password });
 
             if (token) {
-                saveToken(token); // ✅ save JWT
-
-                const role = getUserRole(); // ✅ decode role from token
+                saveToken(token);
+                const role = getUserRole();
 
                 if (role === "ROLE_ADMIN") {
-                    window.location.href = "dashboard.html"; // admin goes to dashboard
+                    window.location.href = "dashboard.html";
                 } else {
-                    window.location.href = "tasks.html"; // user goes to tasks
+                    window.location.href = "tasks.html";
                 }
-
             } else {
                 document.getElementById('message').innerText = "❌ Invalid email or password";
             }
