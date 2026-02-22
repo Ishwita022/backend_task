@@ -175,6 +175,37 @@ async function toggleTask(id, currentStatus) {
     }
 }
 
+
+function editTask(id, title, description) {
+    const newTitle = prompt("Edit Title:", title);
+    if (newTitle === null) return; // cancelled
+
+    const newDesc = prompt("Edit Description:", description);
+    if (newDesc === null) return; // cancelled
+
+    updateTask(id, { title: newTitle, description: newDesc });
+}
+
+async function updateTask(id, updatedData) {
+    try {
+        const res = await fetch(`${BASE_URL}/tasks/${id}`, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + getToken(),
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (!res.ok) throw new Error(await res.text());
+        alert("Task updated successfully!");
+        loadTasks(); // refresh list
+    } catch (err) {
+        console.error("Failed to update task:", err);
+        alert("Update failed!");
+    }
+}
+
 /* =========================
    LOAD TASKS (ROLE BASED UI)
 ========================= */
@@ -216,16 +247,18 @@ async function loadTasks() {
                 <br>Status: ${t.completed ? "✅ Completed" : "⏳ Pending"}
             </div>
             <br>
-            <button 
-                style="background:green;color:white;padding:6px 12px;margin-right:8px;border:none;border-radius:4px;cursor:pointer;"
-                onclick="toggleTask(${t.id}, ${t.completed})">
-                Toggle Complete
-            </button>
-            <button 
-                style="background:red;color:white;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;"
-                onclick="deleteTask(${t.id})">
-                Delete
-            </button>
+			<button style="background:blue;color:white;padding:6px 12px;margin-right:8px;border:none;border-radius:4px;cursor:pointer;"
+			       onclick="editTask(${t.id}, '${t.title}', '${t.description}')">
+			       ✏️ Edit
+			   </button>
+			   <button style="background:green;color:white;padding:6px 12px;margin-right:8px;border:none;border-radius:4px;cursor:pointer;"
+			       onclick="toggleTask(${t.id}, ${t.completed})">
+			       Toggle Complete
+			   </button>
+			   <button style="background:red;color:white;padding:6px 12px;border:none;border-radius:4px;cursor:pointer;"
+			       onclick="deleteTask(${t.id})">
+			       🗑️ Delete
+			   </button>
         `;
 
         list.appendChild(div);
